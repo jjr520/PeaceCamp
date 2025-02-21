@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 在res/values/styles.xml中添加 -->
+    <style name="AppTheme.TransparentBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 设置状态栏为透明 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 对于Android 5.0以上版本，需要设置状态栏颜色为透明 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 适配Android 6.0设置系统栏沉浸。如果设置了windowTranslucentNavigation，则需要去掉 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- 移除标题栏 -->
+        <item name="android:windowActionBar">false</item>
+        <!-- 防止标题栏占据空间 -->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>
