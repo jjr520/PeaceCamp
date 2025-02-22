@@ -15,10 +15,10 @@
             &lt;!&ndash; Customize your theme here. &ndash;&gt;
         </style>
     -->
-
     <style name="Theme.PeaceCamp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- 其他主题设置 -->
+        <!-- 设置状态栏透明 -->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 </resources>
