@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnHot, btnLatest;
     private ViewPager2 viewPager;
 
+    private ImageView ivShow, backButton;
+    private View titleBar;
+    private TextView titleText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +69,61 @@ public class MainActivity extends AppCompatActivity {
         expand = findViewById(R.id.expand);
         btnHot = findViewById(R.id.btn_hot);
         btnLatest = findViewById(R.id.btn_latest);
-
         // 初始化 ViewPager2
         viewPager = findViewById(R.id.view_pager);
+
+        ivShow = findViewById(R.id.iv_show);
+        titleBar = findViewById(R.id.title_bar);
+        titleText = findViewById(R.id.title_text);
+        backButton = findViewById(R.id.back_button);
+
+        // 设置透明状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
+        // 设置滚动监听
+        scrollView.setOnScrollChangedListener(scrollY -> {
+            if (ivShow.getHeight() == 0) return;
+
+            // 计算透明度（0-1）
+            float alpha = (float) scrollY / ivShow.getHeight();
+            alpha = Math.min(1f, Math.max(0f, alpha));
+
+            // 更新标题栏背景透明度（从透明到白色）
+            int bgAlpha = (int) (alpha * 255);
+            titleBar.setBackgroundColor(Color.argb(bgAlpha, 247, 250, 252));
+
+            // 更新标题文本透明度
+            titleText.setAlpha(alpha);
+            titleBar.setVisibility(alpha > 0 ? View.VISIBLE : View.INVISIBLE);
+            backButton.setBackground(alpha > 0 ? getDrawable(R.mipmap.cg_icon_back_light_two) : getDrawable(R.mipmap.cg_icon_back_light));
+
+            // 更新状态栏（API 21+）
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(Color.argb(bgAlpha, 255, 255, 255));
+
+                // 根据背景亮度调整状态栏图标颜色
+                if (alpha > 0.5f) {
+                    // 浅色背景使用深色图标
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                } else {
+                    // 深色背景使用浅色图标
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                }
+            }
+        });
+
+        // 确保图片高度测量正确
+        ivShow.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            // 触发一次滚动更新
+            scrollView.post(() -> scrollView.scrollTo(0, scrollView.getScrollY()));
+        });
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(adapter);
 

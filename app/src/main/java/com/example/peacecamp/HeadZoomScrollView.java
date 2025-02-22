@@ -18,6 +18,25 @@ public class HeadZoomScrollView extends ScrollView {
     private float mScrollRate = 0.4f;//缩放系数，缩放系数越大，变化的越大
     private float mReplyRate = 0.3f;//回调系数，越大，回调越慢
 
+    // 添加滚动监听接口
+    public interface OnScrollChangedListener {
+        void onScrollChanged(int scrollY);
+    }
+
+    private OnScrollChangedListener mScrollListener;
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (mScrollListener != null) {
+            mScrollListener.onScrollChanged(t);
+        }
+    }
+
+    public void setOnScrollChangedListener(OnScrollChangedListener listener) {
+        mScrollListener = listener;
+    }
+
     public HeadZoomScrollView(Context context) {
         super(context);
     }

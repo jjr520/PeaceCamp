@@ -7,11 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
+    <color name="gray">#808080</color> <!-- 灰色 -->
     <color name="transparent">#00000000</color><!--透明-->
     <color name="color_4DFFFFFF">#4DFFFFFF</color><!--30% -->
     <color name="color_A600050A">#A600050A</color><!--65% -->
     <color name="color_395FAB">#395FAB</color>
     <color name="color_F7FAFC">#F7FAFC</color>
     <color name="color_0F00050A">#0F00050A</color><!--6% -->
+    <color name="color_80000000">#80000000</color>
 </resources>
