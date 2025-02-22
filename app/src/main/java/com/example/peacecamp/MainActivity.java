@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     private View titleBar;
     private TextView titleText;
 
+    private View statusBarOverlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +78,10 @@ public class MainActivity extends AppCompatActivity {
         titleBar = findViewById(R.id.title_bar);
         titleText = findViewById(R.id.title_text);
         backButton = findViewById(R.id.back_button);
+        statusBarOverlay = findViewById(R.id.status_bar_overlay);
 
-        // 设置全屏模式并保留状态栏图标
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT); // 状态栏透明
-            window.getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
+        // 设置状态栏高度
+        setStatusBarHeight();
 
         backButton.setImageResource(R.mipmap.cg_icon_back_light); // 设置初始图标
 
@@ -98,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
             // 更新标题栏背景透明度（从透明到#F7FAFC）
             int bgAlpha = (int) (alpha * 255);
-            titleBar.setBackgroundColor(Color.argb(bgAlpha, 247, 250, 252));
+            int statusBarColor = Color.argb(bgAlpha, 247, 250, 252);
+            titleBar.setBackgroundColor(statusBarColor);
 
             // 更新返回按钮图标
             if (alpha > 0.1f) { // 当透明度超过10%时切换图标
@@ -110,21 +108,6 @@ public class MainActivity extends AppCompatActivity {
             // 更新标题文本透明度
             titleText.setAlpha(alpha);
             titleBar.setVisibility(alpha > 0 ? View.VISIBLE : View.INVISIBLE);
-
-            // 更新状态栏（API 21+）
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                int statusBarColor = Color.argb(bgAlpha, 255, 255, 255); // 白色背景
-                getWindow().setStatusBarColor(statusBarColor);
-
-                // 根据背景亮度调整状态栏图标颜色
-                if (alpha > 0.5f) {
-                    // 浅色背景使用深色图标
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                } else {
-                    // 深色背景使用浅色图标
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                }
-            }
         });
 
         // 确保图片高度测量正确
@@ -189,4 +172,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setStatusBarHeight() {
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        ViewGroup.LayoutParams params = statusBarOverlay.getLayoutParams();
+        params.height = statusBarHeight;
+        statusBarOverlay.setLayoutParams(params);
+    }
 }

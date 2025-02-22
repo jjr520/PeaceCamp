@@ -2,8 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <com.example.peacecamp.HeadZoomScrollView
         android:id="@+id/scrollView"
@@ -143,7 +142,7 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_55"
         android:scaleType="centerCrop"
         android:src="@mipmap/cg_icon_back_light" />
     <!-- 新增固定标题栏 -->
@@ -151,6 +150,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_35"
         android:background="@android:color/transparent"
         android:visibility="invisible">
 
@@ -177,5 +177,13 @@
             android:textSize="@dimen/sp_18" />
 
     </RelativeLayout>
+
+    <!-- 新增状态栏遮罩层 -->
+    <View
+        android:id="@+id/status_bar_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_24"
+        android:alpha="0.6"
+        android:background="@color/status_bar_shadow" />
 </FrameLayout>
 

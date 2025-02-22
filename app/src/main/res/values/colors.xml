@@ -15,4 +15,5 @@
     <color name="color_F7FAFC">#F7FAFC</color>
     <color name="color_0F00050A">#0F00050A</color><!--6% -->
     <color name="color_80000000">#80000000</color>
+    <color name="status_bar_shadow">#33000000</color>
 </resources>

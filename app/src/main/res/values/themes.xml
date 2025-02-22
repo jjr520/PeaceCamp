@@ -16,9 +16,11 @@
         </style>
     -->
     <style name="Theme.PeaceCamp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- 设置状态栏透明 -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- 添加以下两行 -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:fitsSystemWindows">false</item>
     </style>
 </resources>
