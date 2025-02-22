@@ -65,30 +65,30 @@ public class HeadZoomScrollView extends ScrollView {
             mZoomViewHeight = mZoomView.getMeasuredHeight();
         }
         switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                firstPosition = ev.getY();
+                break;
             case MotionEvent.ACTION_UP:
-                //手指离开后恢复图片
                 isScrolling = false;
                 replyImage();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!isScrolling) {
                     if (getScrollY() == 0) {
-                        firstPosition = ev.getY();// 滚动到顶部时记录位置，否则正常返回
+                        firstPosition = ev.getY();
                     } else {
                         break;
                     }
                 }
-                int distance = (int) ((ev.getY() - firstPosition) * mScrollRate); // 滚动距离乘以一个系数
-                if (distance < 0) { // 当前位置比记录位置要小，正常返回
+                int distance = (int) ((ev.getY() - firstPosition) * mScrollRate);
+                if (distance < 0) {
                     break;
                 }
-
-                // 处理放大
                 isScrolling = true;
                 setZoom(distance);
-                return true; // 返回true表示已经完成触摸事件，不再处理
+                return true;
         }
-        return true;
+        return super.onTouchEvent(ev);
     }
 
     //回弹动画

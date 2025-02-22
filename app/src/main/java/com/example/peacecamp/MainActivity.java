@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView expand;
     private boolean isExpanded = false;
 
-    private int maxScroll = 0; // 最大滚动距离，默认为0，稍后设置
-    private Drawable background; // 背景图片或颜色
     private String fullText = "【参与方式】关注策划小白裙账号，在#一起去坐滑翔机#话题下晒出你在游戏中驾驶滑翔机的截图和技巧，或者分享你想和谁一起坐上滑翔机，你想怎么使用滑翔机。\n" +
             "【活动奖励】符合活动要求的动态中抽10人每人送200Q币，抽10人每人送100Q币，抽5人每人送游戏永久套装-壁垒格斗家一件。";
 
@@ -67,15 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btnHot = findViewById(R.id.btn_hot);
         btnLatest = findViewById(R.id.btn_latest);
 
-        background = getWindow().getDecorView().getBackground(); // 获取当前背景
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-            int scrollY = scrollView.getScrollY(); // 获取当前滚动位置
-            float alpha = (float) scrollY / maxScroll; // 计算透明度比例
-            alpha = Math.min(1, alpha); // 限制透明度在0到1之间
-            background.setAlpha((int) (255 * alpha)); // 设置背景透明度
-            getWindow().setBackgroundDrawable(background); // 应用背景颜色或图片
-        });
-        maxScroll = scrollView.getChildAt(0).getMeasuredHeight() - scrollView.getMeasuredHeight(); // 计算最大滚动距离
         // 初始化 ViewPager2
         viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
@@ -92,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         // 按钮点击切换 Fragment
         btnHot.setOnClickListener(v -> viewPager.setCurrentItem(0, true));
         btnLatest.setOnClickListener(v -> viewPager.setCurrentItem(1, true));
+        viewPager.setNestedScrollingEnabled(false);
         viewPager.setPageTransformer(new DepthPageTransformer());
         // ViewPager2 页面切换监听
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
