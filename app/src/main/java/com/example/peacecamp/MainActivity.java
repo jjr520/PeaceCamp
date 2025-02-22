@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         // 设置状态栏高度
         setStatusBarHeight();
+        // 初始化状态栏图标颜色
+        setStatusBarIconColor(false);
 
         backButton.setImageResource(R.mipmap.cg_icon_back_light); // 设置初始图标
 
@@ -92,6 +94,24 @@ public class MainActivity extends AppCompatActivity {
             // 计算透明度（0-1）
             float alpha = (float) scrollY / ivShow.getHeight();
             alpha = Math.min(1f, Math.max(0f, alpha));
+
+            // 更新状态栏遮罩
+            statusBarOverlay.setAlpha(alpha); // 遮罩逐渐显现
+            statusBarOverlay.setBackground(getDrawable(R.color.black));
+
+            // 根据透明度切换状态栏图标颜色
+            // 更新遮罩层效果
+            if (alpha > 0.3f) {
+                // 上划时：白色背景+深色图标
+                statusBarOverlay.setBackgroundColor(Color.WHITE);
+                setStatusBarIconColor(true);
+                statusBarOverlay.setAlpha(alpha);
+            } else {
+                // 下划时：黑色半透明背景+浅色图标
+                statusBarOverlay.setBackgroundColor(Color.BLACK);
+                setStatusBarIconColor(false);
+                statusBarOverlay.setAlpha(0.2f * (1 - alpha)); // 保持半透明效果
+            }
 
             // 更新标题栏背景透明度（从透明到#F7FAFC）
             int bgAlpha = (int) (alpha * 255);
@@ -181,5 +201,22 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params = statusBarOverlay.getLayoutParams();
         params.height = statusBarHeight;
         statusBarOverlay.setLayoutParams(params);
+
+        // 设置初始状态
+        statusBarOverlay.setAlpha(0.2f);
+        statusBarOverlay.setBackgroundColor(Color.BLACK);
+    }
+
+    private void setStatusBarIconColor(boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            int flags = decorView.getSystemUiVisibility();
+            if (dark) {
+                flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            } else {
+                flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            }
+            decorView.setSystemUiVisibility(flags);
+        }
     }
 }

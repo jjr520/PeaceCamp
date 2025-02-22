@@ -183,7 +183,7 @@
         android:id="@+id/status_bar_overlay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_24"
-        android:alpha="0.6"
-        android:background="@color/status_bar_shadow" />
+        android:alpha="0.2"
+        android:background="@color/black" />
 </FrameLayout>
 
