@@ -136,6 +136,14 @@
 
     </com.example.peacecamp.HeadZoomScrollView>
 
+    <!-- 新增状态栏遮罩层 -->
+    <View
+        android:id="@+id/status_bar_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_24"
+        android:alpha="0.2"
+        android:background="@color/black" />
+
 
     <!-- 返回按钮 -->
     <ImageView
@@ -145,6 +153,7 @@
         android:layout_marginTop="@dimen/dp_55"
         android:scaleType="centerCrop"
         android:src="@mipmap/cg_icon_back_light" />
+
     <!-- 新增固定标题栏 -->
     <RelativeLayout
         android:id="@+id/title_bar"
@@ -177,13 +186,5 @@
             android:textSize="@dimen/sp_18" />
 
     </RelativeLayout>
-
-    <!-- 新增状态栏遮罩层 -->
-    <View
-        android:id="@+id/status_bar_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_24"
-        android:alpha="0.2"
-        android:background="@color/black" />
 </FrameLayout>
 

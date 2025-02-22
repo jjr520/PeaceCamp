@@ -205,6 +205,12 @@ public class MainActivity extends AppCompatActivity {
         // 设置初始状态
         statusBarOverlay.setAlpha(0.2f);
         statusBarOverlay.setBackgroundColor(Color.BLACK);
+
+
+        // 设置标题栏的 marginTop
+        ViewGroup.MarginLayoutParams titleBarParams = (ViewGroup.MarginLayoutParams) titleBar.getLayoutParams();
+        titleBarParams.topMargin = statusBarHeight; // 动态调整标题栏位置
+        titleBar.setLayoutParams(titleBarParams);
     }
 
     private void setStatusBarIconColor(boolean dark) {
