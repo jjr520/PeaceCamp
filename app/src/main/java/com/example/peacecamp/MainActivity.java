@@ -198,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
     private void toggleText() {
         if (isExpanded) { // 如果已展开，则收起并更新文本为省略状态
             textViewContent.setMaxLines(4);
-            expand.setText("展开"); // 更新按钮文本为“展开”
+            expand.setText(R.string.full); // 更新按钮文本为“展开”
         } else { // 如果未展开，则显示全部文本并更新按钮状态
             textViewContent.setMaxLines(Integer.MAX_VALUE);
-            expand.setText("收起"); // 更新按钮文本为“收起”
+            expand.setText(R.string.pack); // 更新按钮文本为“收起”
         }
         isExpanded = !isExpanded; // 切换状态
     }
