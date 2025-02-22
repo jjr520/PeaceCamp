@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -152,10 +152,10 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_20"
+            android:layout_width="@dimen/dp_26"
+            android:layout_height="@dimen/dp_26"
             android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
             android:scaleType="centerCrop"
             android:src="@mipmap/cg_icon_back_light" />
     </LinearLayout>
@@ -172,8 +172,8 @@
         <!-- 返回按钮 -->
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_26"
+            android:layout_height="@dimen/dp_26"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_20"
             android:scaleType="centerCrop"
@@ -192,5 +192,55 @@
             android:textSize="@dimen/sp_18" />
 
     </RelativeLayout>
-</FrameLayout>
+    <!-- 吸顶布局 -->
+    <RelativeLayout
+        android:id="@+id/sticky_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/back_light"
+        android:background="@drawable/button_bg"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:text="动态 23"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:background="@color/color_0F00050A"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sticky_btn_hot"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_24"
+                android:layout_margin="@dimen/dp_1"
+                android:background="@drawable/button_bg1"
+                android:text="热门"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+
+            <Button
+                android:id="@+id/sticky_btn_latest"
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_24"
+                android:layout_margin="@dimen/dp_1"
+                android:background="@color/transparent"
+                android:text="最新"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_13" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
 

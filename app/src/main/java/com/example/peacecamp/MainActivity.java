@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
     private View statusBarOverlay;
 
+    private View originalLayout; // 原 layout
+    private View stickyLayout;   // 吸顶 layout
+    private Button stickyBtnHot, stickyBtnLatest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
         backButton = findViewById(R.id.back_button);
         backLight = findViewById(R.id.back_light);
         statusBarOverlay = findViewById(R.id.status_bar_overlay);
+
+        originalLayout = findViewById(R.id.layout);
+        stickyLayout = findViewById(R.id.sticky_layout);
+        stickyBtnHot = findViewById(R.id.sticky_btn_hot);
+        stickyBtnLatest = findViewById(R.id.sticky_btn_latest);
 
         // 设置状态栏高度
         setStatusBarHeight();
@@ -131,6 +140,20 @@ public class MainActivity extends AppCompatActivity {
             // 更新标题文本透明度
             titleText.setAlpha(alpha);
             titleBar.setVisibility(alpha > 0 ? View.VISIBLE : View.INVISIBLE);
+
+            // 计算吸顶条件
+            int[] location = new int[2];
+            originalLayout.getLocationOnScreen(location);
+            int originalTop = location[1]; // 原 layout 在屏幕中的 Y 坐标
+            int titleBarHeight = titleBar.getHeight() + statusBarOverlay.getHeight();
+
+            if (originalTop <= titleBarHeight) {
+                stickyLayout.setVisibility(View.VISIBLE);
+                // 同步按钮状态
+                updateStickyButtonState(viewPager.getCurrentItem());
+            } else {
+                stickyLayout.setVisibility(View.GONE);
+            }
         });
 
         // 确保图片高度测量正确
@@ -153,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
         // 按钮点击切换 Fragment
         btnHot.setOnClickListener(v -> viewPager.setCurrentItem(0, true));
         btnLatest.setOnClickListener(v -> viewPager.setCurrentItem(1, true));
+        // 吸顶按钮点击事件（与原按钮同步）
+        stickyBtnHot.setOnClickListener(v -> viewPager.setCurrentItem(0, true));
+        stickyBtnLatest.setOnClickListener(v -> viewPager.setCurrentItem(1, true));
+
         viewPager.setNestedScrollingEnabled(false);
         viewPager.setPageTransformer(new DepthPageTransformer());
         // ViewPager2 页面切换监听
@@ -162,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
 
                 // 更新按钮状态
-                updateButtonState(position);
+                updateButtonState(position); // 更新原按钮
+                updateStickyButtonState(position); // 更新吸顶按钮
             }
         });
     }
@@ -230,6 +258,24 @@ public class MainActivity extends AppCompatActivity {
                 flags &= ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             }
             decorView.setSystemUiVisibility(flags);
+        }
+    }
+
+    // 更新吸顶按钮状态（与原按钮同步）
+    private void updateStickyButtonState(int position) {
+        stickyBtnHot.setSelected(position == 0);
+        stickyBtnLatest.setSelected(position == 1);
+        // 根据 position 更新颜色和背景，逻辑与原按钮一致
+        if (position == 0) {
+            stickyBtnHot.setTextColor(getResources().getColor(R.color.black));
+            stickyBtnLatest.setTextColor(getResources().getColor(R.color.color_A600050A));
+            stickyBtnHot.setBackground(getResources().getDrawable(R.drawable.button_bg1));
+            stickyBtnLatest.setBackground(getResources().getDrawable(R.color.transparent));
+        } else {
+            stickyBtnLatest.setTextColor(getResources().getColor(R.color.black));
+            stickyBtnHot.setTextColor(getResources().getColor(R.color.color_A600050A));
+            stickyBtnHot.setBackground(getResources().getDrawable(R.color.transparent));
+            stickyBtnLatest.setBackground(getResources().getDrawable(R.drawable.button_bg1));
         }
     }
 }
