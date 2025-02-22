@@ -146,13 +146,19 @@
 
 
     <!-- 返回按钮 -->
-    <ImageView
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_55"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/cg_icon_back_light" />
+    <LinearLayout
+        android:id="@+id/back_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginStart="@dimen/dp_20"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/cg_icon_back_light" />
+    </LinearLayout>
 
     <!-- 新增固定标题栏 -->
     <RelativeLayout

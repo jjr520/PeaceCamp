@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivShow, backButton;
     private View titleBar;
     private TextView titleText;
+    private LinearLayout backLight;
 
     private View statusBarOverlay;
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         titleBar = findViewById(R.id.title_bar);
         titleText = findViewById(R.id.title_text);
         backButton = findViewById(R.id.back_button);
+        backLight = findViewById(R.id.back_light);
         statusBarOverlay = findViewById(R.id.status_bar_overlay);
 
         // 设置状态栏高度
@@ -211,6 +214,10 @@ public class MainActivity extends AppCompatActivity {
         ViewGroup.MarginLayoutParams titleBarParams = (ViewGroup.MarginLayoutParams) titleBar.getLayoutParams();
         titleBarParams.topMargin = statusBarHeight; // 动态调整标题栏位置
         titleBar.setLayoutParams(titleBarParams);
+
+        ViewGroup.MarginLayoutParams backLightParams = (ViewGroup.MarginLayoutParams) backLight.getLayoutParams();
+        backLightParams.topMargin = statusBarHeight; // 动态调整标题栏位置
+        backLight.setLayoutParams(backLightParams);
     }
 
     private void setStatusBarIconColor(boolean dark) {
